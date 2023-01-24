@@ -7,7 +7,7 @@
 
 # 링크
 
-https://khs20010327.tistory.com/114
+https://gillyongs.github.io/github.io/seotda/calculator/
 
 <br>
 
