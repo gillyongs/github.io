@@ -1,5 +1,5 @@
 
-![image](https://user-images.githubusercontent.com/101636590/214232502-f8d6984d-02ba-493b-acda-bf67fd40019f.png)
+![image](https://user-images.githubusercontent.com/101636590/214246299-731bd0b8-72f5-490d-b607-4b37173f1ff3.png)
 
 텍스트를 괴상하게(?) 바꿔주는 번역기입니다
 
