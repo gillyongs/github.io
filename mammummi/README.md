@@ -17,3 +17,14 @@
 법붑비 https://gillyongs.github.io/github.io/mammummi/법붑비/
 
 
+<br>
+
+# 개발일지
+
+https://khs20010327.tistory.com/36
+
+<br>
+
+# 커뮤니티
+
+https://www.inven.co.kr/board/maple/2299/8802853
