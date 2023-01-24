@@ -8,8 +8,3 @@
 
 https://gillyongs.github.io/github.io/lalaticon/
 
-<br>
-
-# 개발일지
-
-
