@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>익성비 기대값 계산기</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@700&display=swap');
+</style>
+</head>
+<body>
+    <h1>익성비 기대값 계산기</h1>
+    <hr>
+    <br>
+        <img id="bbang" height="400" weight="400" src="bread.jpg"></img>
+        <br>
+        <pre id="err"></pre>
+        <br>
+        
+
+        시작 레벨  <input id="one"/><br>
+        최종 레벨  <input id="two"/> <br>
+        먹인 익성비 개수 <input id="three"/> <br>
+        <button id = 'sh' onclick = 'calulate()' type="button">실행</button>
+        <button id = 'rs' onclick = 'reset()'  type="button">초기화</button>
+        <br>
+
+        <pre id='res'></pre>  
+        <pre id='res2'></pre>  
+    <script>
+        var level=141;
+        var level2=141;
+        var isbb = 3;
+        var sum=0;
+        var error=0;
+        const result = Array.from({length: 100}, () => 0);
+
+        function isb(level){
+            var num = Math.floor(Math.random()*20);
+            var up = arr[level-141][num];
+            return level+up;
+        }
+        function reset(){
+            for(var i=0 ; i<100 ; i++){
+                result[i]=0;
+            }
+            sum=0;
+            error=0;
+            document.getElementById('sh').innerHTML = '실행';
+            document.getElementById('res').innerHTML= ' ';
+            document.getElementById('res2').innerHTML = ' ';
+        }
+
+        function check(){
+            error++;
+            level= parseInt(document.getElementById('one').value);
+            level2= parseInt(document.getElementById('two').value);
+            isbb = parseInt(document.getElementById('three').value);
+            if( !level || !level2 ){
+                if(!level && !level2){
+                    document.getElementById("bbang").src = "error.jpg";
+                    document.getElementById('err').innerHTML= '입력값이 없는데용';
+                }
+                else if(!level){
+                    document.getElementById("bbang").src = "under.jpg";
+                    document.getElementById('err').innerHTML= '현재 레벨을 입력해야 계산을 하든지 말든지 할 것 아닙니까 휴먼';
+                }
+                else if(!level2){
+                    document.getElementById("bbang").src = "under.jpg";
+                    document.getElementById('err').innerHTML= '최종 레벨을 입력해야 계산을 하든지 말든지 할 것 아닙니까 휴먼';
+                }
+                 if(error==8){
+                    document.getElementById("bbang").src = "ester.png";
+                    document.getElementById('err').innerHTML= '자 이게 클릭이란거야';
+                    return;
+                }
+                return;
+            } 
+            if(level>=level2 || level<=0 || level2<=0 || isbb<=0){
+                document.getElementById("bbang").src = "errk.png";
+                 document.getElementById('err').innerHTML= '지금 저를 놀리시는겁니까 휴먼?';
+                 return;
+            }
+            if(level<141){
+                 document.getElementById("bbang").src = "under.jpg";
+                 document.getElementById('err').innerHTML= '익성비는 141렙부터 사용 가능합니다 휴먼';
+                 return;
+            }
+            
+            if((level>200 && level<=300) || (level2>200 && level2<=300)){
+                 document.getElementById("bbang").src = "up.jpg";
+                 document.getElementById('err').innerHTML= '201렙 이상은 니가 계산하십시오 휴먼';
+                 return;
+            }
+            
+            if(level>300 || level2>300){
+                document.getElementById("bbang").src = "up.jpg";
+                 document.getElementById('err').innerHTML= '300렙 이상은 미래에 계산하십시오 휴먼';
+                 return;
+            }
+            
+
+            error=0;
+            document.getElementById("bbang").src = "bread.jpg";
+            document.getElementById('err').innerHTML= '';
+        }
+
+
+        function calulate(){
+            check();
+            if(error!=0){
+                return;
+            }
+            document.getElementById('sh').innerHTML = '추가실행';
+            document.getElementById('res').innerHTML= ' ';
+            document.getElementById('res2').innerHTML = ' ';
+            sum += 100000;
+            for(var i=0 ; i<100000 ; i++){
+                level= parseInt(document.getElementById('one').value);
+                level2 = parseInt(document.getElementById('two').value);
+                
+                for(var j=1 ; j<100 ; j++){
+                    level = isb(level);
+                    if(level>=level2){
+                        result[j]++;
+                        break;
+                    }
+                }
+                
+            }
+
+            var maxx=-1;
+            var maxindex=0;
+            var ssum1=0;
+            var ssum2=0;
+            var avg=0;
+            var mid=0;
+            var curlev = parseInt(document.getElementById('three').value);
+            for(var i=0 ; i<=70 ; i++){
+                if(result[i]>maxx){
+                    maxx = result[i];
+                    maxindex=i;
+                }
+                if(i==curlev){
+                    ssum1+=result[i];
+                }
+                if(i<curlev){
+                    ssum1+=result[i];
+                    ssum2+=result[i];
+                }
+                
+                avg+=result[i]*i;
+            }
+            for(var i=0 ; i<=70 ; i++){
+                mid+=result[i];
+                if(mid>(sum/2)){
+                    mid = i;
+                    break;
+                }
+            }
+            ssum1=( (ssum1*100)/sum ).toFixed(2);
+            ssum2=( (ssum2*100)/sum ).toFixed(2);
+            avg = (avg/sum).toFixed(1);
+            document.getElementById('res').innerHTML = "평균값: "+avg+"개\n"
+            document.getElementById('res').innerHTML += "최빈값: "+maxindex+"개\n"
+            document.getElementById('res').innerHTML += "중간값: "+mid+"개\n"
+
+            if(curlev){
+                var at = Math.floor(ssum2)
+                document.getElementById('res').innerHTML += "\n당신의 운빨은 상위 "+ssum2+"% ~ "+ssum1+"%입니다.\n";
+                document.getElementById('res').innerHTML += "("+at+"%의 사람들이 "+curlev+"개보다 적은 개수로 "+level2+"렙을 달성했습니다.)\n";
+            }
+            for(var i=0 ; i<70 ; i++){
+                if(result[i]!=0){
+                    document.getElementById('res2').innerHTML += "\n"+i+" "+result[i];
+                }
+            }
+        }
+
+        const arr = [ 
+            [1,2,3,4,5,6,7,7,8,8,8,8,9,9,9,9,10,10,10,10], //141
+            [1,2,3,4,5,6,6,7,7,8,8,8,8,9,9,9,9,10,10,10], //142
+            [1,2,3,4,5,6,6,7,7,7,7,8,8,8,9,9,9,10,10,10], //143
+            [1,2,3,4,5,6,6,6,6,7,7,8,8,8,9,9,9,10,10,10], //144
+            [1,2,3,4,4,5,5,6,6,7,7,8,8,8,9,9,9,10,10,10], //145
+            [1,2,3,4,4,5,5,6,6,7,7,7,8,8,8,9,9,9,10,10], //146
+            [1,2,3,4,4,5,5,6,6,6,7,7,7,8,8,8,9,9,10,10], //147
+            [1,2,3,4,4,5,5,5,6,6,6,7,7,7,8,8,9,9,10,10], //148
+            [1,2,3,3,4,4,5,5,5,6,6,6,7,7,8,8,9,9,10,10], //149
+            [1,2,3,3,4,4,4,5,5,6,6,6,7,7,8,8,9,9,10,10], //150
+            [1,2,3,3,4,4,5,5,5,6,6,6,6,7,7,8,8,9,9,10], //151
+            [1,2,3,3,4,4,5,5,5,5,6,6,6,7,7,7,8,8,9,10], //152
+            [1,2,3,3,4,4,4,5,5,5,6,6,6,6,7,7,8,8,9,10], //153
+            [1,2,3,3,4,4,4,4,5,5,5,5,6,6,7,7,8,8,9,10], //154
+            [1,2,2,3,3,4,4,4,4,5,5,5,6,6,7,7,8,8,9,10], //155
+            [1,1,2,2,3,3,4,4,4,5,5,5,6,6,7,7,8,8,9,10], //156
+            [1,1,2,2,3,3,3,4,4,4,5,5,6,6,7,7,8,8,9,10], //157
+            [1,1,2,2,2,3,3,3,4,4,5,5,6,6,7,7,8,8,9,10], //158
+            [1,1,1,2,2,2,2,3,4,4,5,5,6,6,7,7,8,8,9,10], //159
+            [1,1,1,2,2,3,3,3,4,4,4,5,5,6,6,7,7,8,9,10], //160
+            [1,1,1,2,2,2,3,3,3,4,4,5,5,6,6,7,7,8,9,10], //161
+            [1,1,1,1,2,2,2,3,3,4,4,5,5,6,6,7,7,8,9,10], //162
+            [1,1,1,2,2,2,2,3,3,3,4,4,5,5,6,6,7,8,9,10], //163
+            [1,1,1,1,2,2,2,2,3,3,4,4,5,5,6,6,7,8,9,10], //164
+            [1,1,1,1,2,2,2,2,3,3,3,4,4,5,5,6,7,8,9,10], //165
+            [1,1,1,1,2,2,2,3,3,3,4,4,4,5,5,6,6,7,8,9], //166
+            [1,1,1,1,2,2,2,2,3,3,3,4,4,5,5,6,6,7,8,9], //167
+            [1,1,1,1,2,2,2,2,2,3,3,4,4,5,5,6,6,7,8,9], //168
+            [1,1,1,1,1,2,2,2,2,3,3,4,4,5,5,6,6,7,8,9], //169
+            [1,1,1,1,1,2,2,2,2,3,3,3,4,4,5,5,6,7,8,9], //170
+            [1,1,1,1,1,2,2,2,2,3,3,4,4,4,5,5,6,6,7,8], //171
+            [1,1,1,1,1,2,2,2,2,3,3,3,4,4,4,5,5,6,7,8], //172
+            [1,1,1,1,1,2,2,2,2,2,3,3,3,4,4,5,5,6,7,8], //173
+            [1,1,1,1,1,2,2,2,2,2,2,3,3,4,4,5,5,6,7,8], //174
+            [1,1,1,1,1,1,2,2,2,2,3,3,3,3,4,4,5,6,7,8], //175
+            [1,1,1,1,1,2,2,2,2,3,3,3,3,3,4,4,5,5,6,7], //176
+            [1,1,1,1,1,1,2,2,2,2,3,3,3,3,4,4,5,5,6,7], //177
+            [1,1,1,1,1,1,2,2,2,2,2,3,3,3,4,4,5,5,6,7], //178
+            [1,1,1,1,1,1,2,2,2,2,2,3,3,3,3,4,4,5,6,7], //179
+            [1,1,1,1,1,1,1,2,2,2,2,2,3,3,3,3,4,5,6,7], //180
+            [1,1,1,1,1,1,1,2,2,2,2,2,2,3,3,3,4,4,5,6], //181
+            [1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3,4,5,6], //182
+            [1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,4,5,6], //183
+            [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,3,3,4,5,6], //184
+            [1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,3,4,5,6], //185
+            [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3,3,4,5], //186
+            [1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,4,5], //187
+            [1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,3,4,5], //188
+            [1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,3,3,4], //189
+            [1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3], //190
+            [1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,3], //191
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,3], //192
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2], //193
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2], //194
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2], //195
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2], //196
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2], //197
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2], //198
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], //199
+        ];
+
+    </script>
+    <style type="text/css">
+        pre{
+            font-family: 'Gowun Batang', serif;
+        }
+        #res{
+            font-size: 25px;
+        }
+        #res2{
+            font-size: 15px;
+        }
+        input {
+            width: 50px;
+            height: 32px;
+            font-size: 15px;
+            margin-bottom: 5px;
+            border: 0;
+            border-radius: 15px;
+            outline: none;
+            padding-left: 10px;
+            background-color: rgb(233, 233, 233);
+        }
+    </style>
+</body>
+</html>
