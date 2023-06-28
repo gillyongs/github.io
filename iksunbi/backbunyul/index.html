@@ -165,7 +165,9 @@
             document.getElementById('res').innerHTML += "최빈값: "+maxindex+"레벨\n"
             document.getElementById('res').innerHTML += "중간값: "+mid+"레벨\n"
             if(curlev){
+                var at = Math.floor(ssum2)
                 document.getElementById('res').innerHTML += "\n당신의 운빨은 상위 "+ssum2+"% ~ "+ssum1+"%입니다.\n";
+                document.getElementById('res').innerHTML += "("+at+"%의 사람들이 같은 개수로 "+curlev+"보다 높은 레벨을 달성했습니다.)\n";
             }
             for(var i=200 ; i>140 ; i--){
                 if(result[i]!=0){
