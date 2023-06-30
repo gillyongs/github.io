@@ -11,5 +11,13 @@
 
 # 링크
 
-https://gillyongs.github.io/github.io/iksunbi/backbunyul <br>
-https://gillyongs.github.io/github.io/iksunbi/gidatgap
+백분율 계산기 <br>
+https://gillyongs.github.io/github.io/iksunbi/backbunyul <br> <br>
+기대값 계산기 <br>
+https://gillyongs.github.io/github.io/iksunbi/gidatgap <br>
+
+<br>
+
+# 개발일지
+
+https://khs20010327.tistory.com/222
