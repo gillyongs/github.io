@@ -1,4 +1,4 @@
-## 인벤 짤방 생성기
+## 머리카락 짤방 생성기
 
 ![i13639638653](https://github.com/gillyongs/github.io/assets/101636590/e4d601fc-4c82-4888-a6df-b22b8053cdcf)
 
